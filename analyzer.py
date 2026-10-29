@@ -7,7 +7,7 @@ import pyshark
 
 # Restrict CSV output to simple filenames in the current directory.
 CSV_FILENAME_PATTERN = r"[a-zA-Z0-9_-][a-zA-Z0-9_.-]*\.csv"
-CSV_COLUMNS = ["Packet", "Protocol", "Length", "Source IP", "Destination IP"]
+CSV_COLUMN_NAMES = ["Packet", "Protocol", "Length", "Source IP", "Destination IP"]
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -98,7 +98,7 @@ def main():
             writer = csv.writer(csv_file) if csv_file is not None else None
 
             if writer is not None:
-                writer.writerow(CSV_COLUMNS)
+                writer.writerow(CSV_COLUMN_NAMES)
 
             capture = pyshark.LiveCapture(interface=args.interface)
 
@@ -111,6 +111,8 @@ def main():
 
                 # Skip nonmatching packets while still counting all captured traffic.
                 if args.protocol is not None and protocol != args.protocol:
+                    print(f"Packet {number} captured, does not match filter")
+                    print("----------------------------------")
                     continue
 
                 matching_packets += 1
