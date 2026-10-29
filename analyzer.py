@@ -15,7 +15,7 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--protocol", type=str, default=None,
+        "--protocol", type=str, default=None, 
         help="Display only this protocol"
     )
     parser.add_argument(
@@ -111,8 +111,7 @@ def main():
 
                 # Skip nonmatching packets while still counting all captured traffic.
                 if args.protocol is not None and protocol != args.protocol:
-                    print(f"Packet {number} captured, does not match filter")
-                    print("----------------------------------")
+                    print(f"Packet {number} does not match the selected filter")
                     continue
 
                 matching_packets += 1
